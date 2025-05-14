@@ -34,7 +34,7 @@ const diceElements = diceNumbers.map(die => {
         {diceElements}
       </div>
 
-      <button className="roll-btn">Roll</button>
+      <button className="roll-btn" onClick={rollDice}>Roll</button>
     </main>
   )
 }
