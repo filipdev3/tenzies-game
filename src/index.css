@@ -25,7 +25,7 @@ div#root {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -51,11 +51,11 @@ div#root {
     background-color: #5035FF;
     width: 92px;
     height: 35px;
-    margin-top: 25px;
     border: none;
     border-radius: 5px;
     color: #FFFFFF;
     font-size: 1rem;
     font-weight: bold;
+    cursor: pointer;
 }
 
