@@ -24,7 +24,11 @@ function generateAllNewDice() {
 
 // Roll dice function
 const rollDice = () => {
-  setDice(generateAllNewDice)
+  setDice(prevDice => prevDice.map(die => 
+    !die.isHeld ? 
+      {...die, value: Math.floor(Math.random() * 6 + 1)} : 
+      die
+  ))
 }
 
 
