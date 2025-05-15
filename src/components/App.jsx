@@ -28,9 +28,25 @@ const rollDice = () => {
 }
 
 
+// Function for hold the die
+const hold = (id) => {
+    setDice(prevDice => prevDice.map(die => 
+      die.id === id ? 
+          {...die, isHeld: !die.isHeld} :
+          die
+      )
+    )
+}
+
+
 // Map over state items to generate Die components 
 const diceElements = dice.map(die => {
-  return <Die key={die.id} value={die.value}/>
+  return <Die 
+            key={die.id} 
+            value={die.value} 
+            isHeld={die.isHeld} 
+            hold={() => hold(die.id)}   // closure that captures die.id 
+          />
 })
 
 
