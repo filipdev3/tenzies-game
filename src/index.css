@@ -35,7 +35,7 @@ div#root {
     margin-bottom: 0;
 }
 
-p {
+.description {
     text-align: center;
     color: #4A4E74;
     font-size: 0.9rem;

@@ -4,9 +4,11 @@ import Die from "./Die";
 
 export default function App() {
 
-
 // Hold generated array into state
 const [dice, setDice] = useState(generateAllNewDice())
+
+// Game won variable
+let gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
 
 
 // Generate array with 10 items with random value from 1 to 6
@@ -58,12 +60,12 @@ const diceElements = dice.map(die => {
     <main className="container">
 
       <h1 className="title">Tenzies</h1>
-      <p>Roll untill all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+      <p className="description">Roll untill all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice-container">
         {diceElements}
       </div>
 
-      <button className="roll-btn" onClick={rollDice}>Roll</button>
+      <button className="roll-btn" onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
     </main>
   )
 }
