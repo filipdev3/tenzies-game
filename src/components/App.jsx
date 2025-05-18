@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import Confetti from "react-confetti"
 import Die from "./Die";
 
 export default function App() {
@@ -9,6 +10,10 @@ const [dice, setDice] = useState(generateAllNewDice())
 
 // Game won variable
 let gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
+
+// Get window hight and width for confetti
+const width = window.innerWidth
+const height = window.innerHeight
 
 
 // Generate array with 10 items with random value from 1 to 6
@@ -66,6 +71,8 @@ const diceElements = dice.map(die => {
       </div>
 
       <button className="roll-btn" onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
+
+      {gameWon && <Confetti width={width} height={height}/>}
     </main>
   )
 }
