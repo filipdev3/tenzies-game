@@ -6,9 +6,12 @@ export default function Die({ value, isHeld, hold}) {
 
     return (
 
-        <button className="die-btn" style={styles} onClick={hold}>
-            {value}
-        </button>
+        <button className="die-btn" 
+            style={styles} 
+            onClick={hold}
+            aria-pressed={isHeld}
+            aria-label={`Die with value ${value}, ${isHeld ? "held" : "not held"}`}        
+        >{value}</button>
     
     )
 }
