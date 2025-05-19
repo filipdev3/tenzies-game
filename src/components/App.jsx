@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti"
 import Die from "./Die";
@@ -6,14 +6,18 @@ import Die from "./Die";
 export default function App() {
 
 // Hold generated array into state
-const [dice, setDice] = useState(generateAllNewDice())
+const [dice, setDice] = useState(() => generateAllNewDice())
 
 // Game won variable
-let gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
+const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
 
 // Get window hight and width for confetti
 const width = window.innerWidth
 const height = window.innerHeight
+
+
+//Ref for button
+const buttonRef = useRef(null)
 
 
 // Generate array with 10 items with random value from 1 to 6
@@ -29,13 +33,17 @@ function generateAllNewDice() {
 
 
 
-// Roll dice function
-const rollDice = () => {
-  setDice(prevDice => prevDice.map(die => 
-    !die.isHeld ? 
-      {...die, value: Math.floor(Math.random() * 6 + 1)} : 
-      die
-  ))
+// Roll dice / New game function
+const handleClick = () => {
+  if(!gameWon){
+    setDice(prevDice => prevDice.map(die => 
+      !die.isHeld ? 
+        {...die, value: Math.floor(Math.random() * 6 + 1)} : 
+        die
+    ))
+  }else {
+    setDice(generateAllNewDice())
+  }
 }
 
 
@@ -70,7 +78,7 @@ const diceElements = dice.map(die => {
         {diceElements}
       </div>
 
-      <button className="roll-btn" onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
+      <button className="roll-btn" onClick={handleClick} ref={buttonRef}>{gameWon ? "New Game" : "Roll"}</button>
 
       {gameWon && <Confetti width={width} height={height}/>}
     </main>
