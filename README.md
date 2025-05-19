@@ -54,7 +54,7 @@ Tenzies is a fun and fast-paced React dice game where the goal is to roll until 
 
 
 **Game won** <br/>
-![Tenzies Preview](./assets/gifs/game-won.gif)
+![Tenzies Preview](https://github.com/filipdev3/tenzies-game/blob/main/src/assets/gifs/game-won.gif)
 
 
 **New Game** <br/>
