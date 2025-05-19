@@ -21,7 +21,9 @@ const height = window.innerHeight
 
 // Focusig "New Game" button if game is won
 useEffect(() => {
-  gameWon ? buttonRef.current.focus() : null
+  if(gameWon) {
+    buttonRef.current.focus()
+  } 
 }, [gameWon])
 
 // Generate array with 10 items with random value from 1 to 6
