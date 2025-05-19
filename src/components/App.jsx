@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti"
 import Die from "./Die";
@@ -8,6 +8,10 @@ export default function App() {
 // Hold generated array into state
 const [dice, setDice] = useState(() => generateAllNewDice())
 
+//Ref for button to access to it when game is won
+const buttonRef = useRef(null)
+
+
 // Game won variable
 const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
 
@@ -15,11 +19,10 @@ const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value ===
 const width = window.innerWidth
 const height = window.innerHeight
 
-
-//Ref for button
-const buttonRef = useRef(null)
-
-
+// Focusig "New Game" button if game is won
+useEffect(() => {
+  gameWon ? buttonRef.current.focus() : null
+}, [gameWon])
 
 // Generate array with 10 items with random value from 1 to 6
 function generateAllNewDice() {
