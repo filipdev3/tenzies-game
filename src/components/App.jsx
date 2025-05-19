@@ -20,6 +20,7 @@ const height = window.innerHeight
 const buttonRef = useRef(null)
 
 
+
 // Generate array with 10 items with random value from 1 to 6
 function generateAllNewDice() {
   return new Array(10)
@@ -70,17 +71,23 @@ const diceElements = dice.map(die => {
 
 
   return (
-    <main className="container">
-
-      <h1 className="title">Tenzies</h1>
-      <p className="description">Roll untill all dice are the same. Click each die to freeze it at its current value between rolls.</p>
-      <div className="dice-container">
-        {diceElements}
+    <>
+      <div aria-live="polite" className="win-message">
+          {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
       </div>
 
-      <button className="roll-btn" onClick={handleClick} ref={buttonRef}>{gameWon ? "New Game" : "Roll"}</button>
+      <main className="container">
 
-      {gameWon && <Confetti width={width} height={height}/>}
-    </main>
+        <h1 className="title">Tenzies</h1>
+        <p className="description">Roll untill all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        <div className="dice-container">
+          {diceElements}
+        </div>
+
+        <button className="roll-btn" onClick={handleClick} ref={buttonRef}>{gameWon ? "New Game" : "Roll"}</button>
+
+        {gameWon && <Confetti width={width} height={height}/>}
+      </main>
+    </>
   )
 }

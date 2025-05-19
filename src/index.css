@@ -8,6 +8,7 @@ body {
     background-color: #0B2434;
     padding: 30px 20px;
     height: 100vh;
+    position: relative;
 }
 
 div#root {
@@ -15,6 +16,24 @@ div#root {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); text-shadow: 0 0 5px gold; }
+    50% { transform: scale(1.05); text-shadow: 0 0 20px gold; }
+    100% { transform: scale(1); text-shadow: 0 0 5px gold; }
+  }
+
+.win-message {
+    position: absolute;
+    color: #FFFFFF;
+    top: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.2rem;
+    animation: pulseGlow 2s infinite;
+    width: 80%;
+    margin: auto;
 }
 
 .container {
