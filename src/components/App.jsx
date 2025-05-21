@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti"
 import Die from "./Die";
+import Stats from "./Stats";
 
 export default function App() {
 
@@ -11,12 +12,35 @@ const [dice, setDice] = useState(() => generateAllNewDice())
 // Start game state to decide which button to display on page
 const [start, setStart] = useState(false)
 
-//Ref for button to access to it when game is won
-const buttonRef = useRef(null)
+
+// States for counting time 
+const [time, setTime] = useState(0)
+const [isRunning, setIsRunning] = useState(false)
+
+
+// States for counting rolls 
+const [countRolls, setCountRolls] = useState(0)
 
 
 // Game won variable
 const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
+
+
+
+// Timer function
+useEffect(() => {
+  let interval;
+  if(isRunning) {
+    interval = setInterval(() => {
+      setTime(prevTime => prevTime + 1);
+    }, 1000)
+  }
+  return () => clearInterval(interval)
+}, [isRunning, gameWon])
+
+//Ref for button to access to it when game is won
+const buttonRef = useRef(null)
+
 
 // Get window hight and width for confetti
 const width = window.innerWidth
@@ -26,6 +50,7 @@ const height = window.innerHeight
 useEffect(() => {
   if(gameWon) {
     buttonRef.current.focus()
+    setIsRunning(false)
   } 
 }, [gameWon])
 
@@ -44,12 +69,15 @@ function generateAllNewDice() {
 
 // Roll dice / New game function
 const handleClick = () => {
-  
     setDice(prevDice => prevDice.map(die => 
       !die.isHeld ? 
         {...die, value: Math.floor(Math.random() * 6 + 1)} : 
         die
     ))
+
+    if(!gameWon){
+      setCountRolls(prevRolls => prevRolls + 1)
+    }
   
 }
 
@@ -75,9 +103,11 @@ const diceElements = dice.map(die => {
           />
 })
 
-
+// New game function
 const newGame = () => {
   setStart(true)
+  setIsRunning(true)
+  setCountRolls(0)
   setDice(generateAllNewDice())
 }
 
@@ -90,8 +120,13 @@ const newGame = () => {
 
       {gameWon && <Confetti width={width} height={height}/>}
 
-      {gameWon ? <button className="new-game-btn" onClick={newGame} ref={buttonRef}>New Game</button> 
+      {gameWon ? 
       
+      <div className="stats-holder">
+        <Stats time={time} countRolls={countRolls}/>
+        <button className="new-game-btn" onClick={newGame} ref={buttonRef}>New Game</button> 
+      </div>
+
       : 
 
       <main className="container">
@@ -112,7 +147,9 @@ const newGame = () => {
         :
 
         <button className="roll-btn" onClick={handleClick}>Roll</button>
-        }
+        
+        }        
+        <h1>{countRolls}</h1>
       </main>
       }
     </>
