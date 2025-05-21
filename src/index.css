@@ -80,7 +80,7 @@ div#root {
     cursor: pointer;
 }
 
-.roll-btn {
+.roll-btn, .new-game-btn{
     background-color: #5035FF;
     width: 92px;
     height: 35px;

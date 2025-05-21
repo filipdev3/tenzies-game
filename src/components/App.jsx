@@ -88,6 +88,12 @@ const newGame = () => {
           {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
       </div>
 
+      {gameWon && <Confetti width={width} height={height}/>}
+
+      {gameWon ? <button className="new-game-btn" onClick={newGame} ref={buttonRef}>New Game</button> 
+      
+      : 
+
       <main className="container">
 
         <h1 className="title">Tenzies</h1>
@@ -101,16 +107,14 @@ const newGame = () => {
         
         ?
 
-        <button className="roll-btn" onClick={newGame} ref={buttonRef}>New Game</button>
+        <button className="roll-btn" onClick={newGame} >New Game</button>
         
         :
 
         <button className="roll-btn" onClick={handleClick}>Roll</button>
         }
-        
-
-        {gameWon && <Confetti width={width} height={height}/>}
       </main>
+      }
     </>
   )
 }
