@@ -8,6 +8,9 @@ export default function App() {
 // Hold generated array into state
 const [dice, setDice] = useState(() => generateAllNewDice())
 
+// Start game state to decide which button to display on page
+const [start, setStart] = useState(false)
+
 //Ref for button to access to it when game is won
 const buttonRef = useRef(null)
 
@@ -41,15 +44,13 @@ function generateAllNewDice() {
 
 // Roll dice / New game function
 const handleClick = () => {
-  if(!gameWon){
+  
     setDice(prevDice => prevDice.map(die => 
       !die.isHeld ? 
         {...die, value: Math.floor(Math.random() * 6 + 1)} : 
         die
     ))
-  }else {
-    setDice(generateAllNewDice())
-  }
+  
 }
 
 
@@ -75,6 +76,12 @@ const diceElements = dice.map(die => {
 })
 
 
+const newGame = () => {
+  setStart(true)
+  setDice(generateAllNewDice())
+}
+
+
   return (
     <>
       <div aria-live="polite" className="win-message">
@@ -89,7 +96,18 @@ const diceElements = dice.map(die => {
           {diceElements}
         </div>
 
-        <button className="roll-btn" onClick={handleClick} ref={buttonRef}>{gameWon ? "New Game" : "Roll"}</button>
+
+        {start === false || gameWon 
+        
+        ?
+
+        <button className="roll-btn" onClick={newGame} ref={buttonRef}>New Game</button>
+        
+        :
+
+        <button className="roll-btn" onClick={handleClick}>Roll</button>
+        }
+        
 
         {gameWon && <Confetti width={width} height={height}/>}
       </main>
