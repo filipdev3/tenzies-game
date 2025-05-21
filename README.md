@@ -11,6 +11,8 @@ Tenzies is a fun and fast-paced React dice game where the goal is to roll until 
 - Confetti animation and win message when all dice are the same
 - Mobile first approach and UI with clear, full-responsive design
 - Accessibility-first approach (`aria-live` `aria-label`, `aria-pressed`, semantic tags)
+- Timer and rolls counter in real time
+- localStorage used to store best time and fewest rolls 
 
 
 ## Technologies Used
