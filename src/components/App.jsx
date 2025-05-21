@@ -18,8 +18,20 @@ const [time, setTime] = useState(0)
 const [isRunning, setIsRunning] = useState(false)
 
 
-// States for counting rolls 
+// State for counting rolls 
 const [countRolls, setCountRolls] = useState(0)
+
+
+// State for best time with lazy initialization 
+const [bestTime, setBestTime] = useState(() => {
+  return JSON.parse(localStorage.getItem("bestTime")) || null
+})
+
+
+// State for best rolls count with lazy initialization 
+const [fewestRolls, setFewestRolls] = useState(() => {
+  return JSON.parse(localStorage.getItem("fewestTime")) || null
+})
 
 
 // Game won variable
@@ -51,6 +63,19 @@ useEffect(() => {
   if(gameWon) {
     buttonRef.current.focus()
     setIsRunning(false)
+
+    // Update best time in localStorage
+    if(bestTime === null || time < bestTime){
+      localStorage.setItem("bestTime", JSON.stringify(time))
+      setBestTime(time)
+    }
+
+    // Update fewest roll count in localStorage
+    if(fewestRolls === null || countRolls < fewestRolls){
+      localStorage.setItem("fewestRolls", JSON.stringify(countRolls))
+      setFewestRolls(countRolls)
+    }
+
   } 
 }, [gameWon])
 
@@ -123,7 +148,7 @@ const newGame = () => {
       {gameWon ? 
       
       <div className="stats-holder">
-        <Stats time={time} countRolls={countRolls}/>
+        <Stats time={time} countRolls={countRolls} bestTime={bestTime} fewestRolls={fewestRolls}/>
         <button className="new-game-btn" onClick={newGame} ref={buttonRef}>New Game</button> 
       </div>
 
@@ -149,7 +174,8 @@ const newGame = () => {
         <button className="roll-btn" onClick={handleClick}>Roll</button>
         
         }        
-        <h1>{countRolls}</h1>
+        <h3>Rolls: {countRolls}</h3>
+        <h3>Time: {time}s</h3>
       </main>
       }
     </>
