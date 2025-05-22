@@ -132,6 +132,7 @@ const diceElements = dice.map(die => {
 const newGame = () => {
   setStart(true)
   setIsRunning(true)
+  setTime(0)
   setCountRolls(0)
   setDice(generateAllNewDice())
 }
